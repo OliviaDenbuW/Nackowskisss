@@ -1,0 +1,17 @@
+﻿@model List<Nackowskisss.Models.AuctionViewModels.AuctionViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<table>
+    @foreach (var auction in Model)
+    {
+        <tr>
+            @*<td>@auction.Titel</td>*@
+            <td><h4><a asp-controller="Auction" asp-action="DeleteAuction" asp-route-id="@auction.Id">@auction.Title</a></h4></td>
+        </tr>
+    }
+</table>
+
+

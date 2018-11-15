@@ -1,0 +1,42 @@
+﻿
+@model Nackowskisss.Models.API_ViewModels.AuctionViewModels.UpdateAuctionViewModel
+
+@{
+    ViewData["Title"] = "UpdateAuction";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>UpdateAuction</h2>
+
+<form asp-controller="Admin" asp-action="UpdateAuction" method="post">
+    @*@{
+            Html.RenderPartial("_AuctionForm");
+        }*@
+    <input type="hidden" asp-for="@Model.Id" />
+
+    <label asp-for="@Model.Title"></label>
+    <br />
+    <input type="text" asp-for="@Model.Title" />
+    <br />
+    <span asp-validation-for="@Model.Title"></span>
+    <br />
+
+    <label asp-for="@Model.Description"></label>
+    <br />
+    <input type="text" asp-for="@Model.Description" />
+    <br />
+    <span asp-validation-for="@Model.Description"></span>
+    <br />
+
+    <label asp-for="@Model.StartPrice"></label>
+    <br />
+    <input type="text" asp-for="@Model.StartPrice" />
+    <br />
+    <span asp-validation-for="@Model.StartPrice"></span>
+    <br />
+
+    <input type="submit" value="Update" class="btn btn-default navbar-btn" />
+</form>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Nackowskisss.Models.API_ViewModels.AuctionViewModels.IndexAuctionViewModel>
+@inject RoleManager<IdentityRole> RoleManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header">
+    <h1>AUCTIONS <small>Aktuella</small></h1>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Admin"))
+    {
+        <input type="button"
+               class="btn btn-default navbar-btn"
+               title="Delete" value="Create new auction"
+               onclick="location.href='@Url.Action("CreateNewAuction", "Admin")'"
+        />
+    }
+}
+
+<br />
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">AKTUELLA AUCTIONS</div><!-- Table -->
+
+    <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Start price</th>
+            <th>End date</th>
+        </tr>
+
+        @foreach (var auction in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Auction"
+                       asp-action="ViewAuctionDetails"
+                       asp-route-auctionId=@auction.Id>@auction.Title</a>
+                </td>
+                <td>@auction.StartPrice</td>
+                <td>@auction.EndDate</td>
+            </tr>
+        }
+    </table>
+    @*@{
+        Html.RenderPartial("_DisplayAuctions");
+    }*@
+</div>

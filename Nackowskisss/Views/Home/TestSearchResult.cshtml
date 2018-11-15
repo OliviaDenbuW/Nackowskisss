@@ -1,0 +1,38 @@
+﻿@model Nackowskisss.Models.API_ViewModels.AuctionViewModels.AuctionViewModel
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+@{
+    ViewData["Title"] = "TestSearchResult";
+}
+
+<h2>TestSearchResult</h2>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //Call EmpDetails jsonResult Method
+        $.getJSON("Home/SearchForAuction",
+            function (json) {
+                var tr;
+                //Append each row to html table
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    tr.append("<td>" + json[i].Id + "</td>");
+                    tr.append("<td>" + json[i].Title + "</td>");
+                    $('table').append(tr);
+                }
+            });
+    });
+</script>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>    

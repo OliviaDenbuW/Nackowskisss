@@ -1,0 +1,45 @@
+﻿@model Nackowskisss.Models.API_ViewModels.AuctionViewModels.DetailsAuctionViewModel
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "ViewAuctionDetails";
+}
+
+<h1>Auction details</h1>
+
+<div class="jumbotron">
+    <h2><label asp-for="@Model.Title"></label>: @Model.Title</h2>
+    <p><label asp-for="@Model.Description"></label>: @Model.Description</p>
+    <p><label asp-for="@Model.EndDateString"></label>: @Model.EndDateString</p>
+    <p><label asp-for="@Model.StartPrice"></label>: @Model.StartPrice kr</p>
+
+
+    @if (User.Identity.IsAuthenticated)
+        {
+            @if (Model.CreatedBy == User.Identity.Name)
+            {
+                <input type="button"
+                       class="btn btn-default navbar-btn"
+                       title="Delete" value="Delete"
+                       onclick="location.href='@Url.Action("DeleteAuction", "Admin", new { auctionId = Model.Id })'" />
+                <br />
+
+                <input type="button"
+                       class="btn btn-default navbar-btn"
+                       title="Update" value="Update"
+                       onclick="location.href='@Url.Action("UpdateAuction", "Admin", new { auctionId = Model.Id })'" />
+            }
+        }
+</div>
+<br />
+
+@if (Model.AuctionIsOpen == true)
+{
+    Html.RenderPartial("_OpenAuctionDetails");
+}
+else
+{
+    Html.RenderPartial("_ClosedAuctionDetails");
+}
