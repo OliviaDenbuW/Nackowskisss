@@ -42,8 +42,10 @@ namespace Nackowskisss.Controllers
 
             AuctionViewModel viewModel = new AuctionViewModel
             {
-                SearchResultAuctionViewModel = searchResult
+                SearchResultAuctionViewModel = searchResult,
+                SearchInput = searchInput
             };
+
 
             return View("SearchResult", viewModel);
             /*return View("SearchResult", searchResult)*/
@@ -59,23 +61,26 @@ namespace Nackowskisss.Controllers
         }
 
         [HttpGet]
-        public IActionResult SortAuctions()
+        public IActionResult SortAuctions(string searchInput, string sortParam)
         {
-            IEnumerable<IndexAuctionViewModel> auctions = _businessService.GetOpenAuctions();
-            //searchResult = _businessService.GetAuctionsSorted(sortParam);
-            //IEnumerable<TestAuctionViewModel> searchResult = _businessService.GetAuctionsSorted(sortParam);
+            IEnumerable<SearchResultAuctionViewModel> searchResult = _businessService.GetSearchResult(searchInput);
+            if (sortParam == "endDate")
+            {
+                searchResult = searchResult.OrderBy(r => r.EndDate);
+            }
+            else if (sortParam == "startPrice")
+            {
+                searchResult = searchResult.OrderBy(r => r.StartPrice);
+            }
 
-            return Json(auctions);
+            AuctionViewModel viewModel = new AuctionViewModel
+            {
+                SearchResultAuctionViewModel = searchResult,
+                SearchInput = searchInput
+            };
+
+            return View("SearchResult", viewModel);
         }
-
-        //[HttpPost]
-        //public IActionResult SortAuctions(/*IEnumerable<SearchResultAuctionViewModel> test, IEnumerable<SearchResultAuctionViewModel> btnSubmit, IEnumerable<SearchResultAuctionViewModel> searchResult, string sortParam*/)
-        //{
-        //    //searchResult = _businessService.GetAuctionsSorted(sortParam);
-        //    //IEnumerable<TestAuctionViewModel> searchResult = _businessService.GetAuctionsSorted(sortParam);
-
-        //    return View("SearchResult", searchResult);
-        //}
 
         public IActionResult About()
         {

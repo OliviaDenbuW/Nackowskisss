@@ -39,6 +39,6 @@ namespace Nackowskisss.Models.API_ViewModels.AuctionViewModels
 
         public OpenAuctionBidViewModel NewBid { get; set; }
 
-        public ClosedAuctionBidViewModel HighestBid { get; set; }
+        public decimal HighestBid { get; set; }
     }
 }

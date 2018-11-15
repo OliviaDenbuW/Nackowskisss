@@ -10,45 +10,16 @@
 <br />
 
 <h4>SORT AUCTIONS BY:</h4>
-@*<input id="Button1" type="button" value="button" onclick="TestAjax()" />
-
-<script type="text/javascript">
-    function TestAjax() {
-        var Test = [];
-
-        for (var i = 0; i < 5; i++) {
-            Test.push({ ID: i, Name: "RJ" });
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: "/Home/SortAuctions",
-            contentType: "application/json",
-            //data: { Test: JSON.stringify( data) },
-            data: JSON.stringify({ Test: Test }),
-            success: function (data) {
-                alert("Succeded");
-            }
-        });
-    }
-</script>*@
-
-<form asp-controller="Home" , asp-action="SortAuctions" method="post">
-    <input type="submit"
-           id="btnSubmit"
-           name="btnSubmit"
-           value="@Model.SearchResultAuctionViewModel" />
-</form>
 
 <input type="button"
        class="btn btn-default navbar-btn"
        title="SortAuctionByEndDate" value="End date"
-       onclick="location.href='@Url.Action("SortAuctions", "Home", new { searchResult = Model.SearchResultAuctionViewModel, sortParam = "endDate" })'" />
+       onclick="location.href='@Url.Action("SortAuctions", "Home", new { searchInput = Model.SearchInput, sortParam = "endDate" })'" />
 
 <input type="button"
        class="btn btn-default navbar-btn"
        title="SortAuctionByEndDate" value="Start price"
-       onclick="location.href='@Url.Action("SortAuctions", "Home", new { sortParam = "startPrice" })'" />
+       onclick="location.href='@Url.Action("SortAuctions", "Home", new { searchInput = Model.SearchInput, sortParam = "startPrice" })'" />
 
 <div class="panel panel-default">
     <!-- Default panel contents -->

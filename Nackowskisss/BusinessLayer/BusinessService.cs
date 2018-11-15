@@ -140,10 +140,9 @@ namespace Nackowskisss.BusinessLayer
             {
                 Id = Int32.Parse(x.AuktionID),
                 Title = x.Titel,
-                
                 StartPrice = decimal.Parse(x.Utropspris),
                 EndDate = x.SlutDatum,
-                AuctionIsOpen = GetAuctionIsOpen(Int32.Parse(x.AuktionID))
+                AuctionIsOpen = GetAuctionIsOpen(x.SlutDatum)
             }).OrderBy(auction => auction.Title);
 
             return viewModelList;
@@ -227,15 +226,10 @@ namespace Nackowskisss.BusinessLayer
             return currentAuction;
         }
 
-        public bool GetAuctionIsOpen(int auctionId)
+        public bool GetAuctionIsOpen(string endDateString)
         {
-            DetailsAuctionViewModel currentAuction = GetAuctionById(auctionId);
-
-            String todayString = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
-            String endDateString = currentAuction.EndDateString;
-
-            DateTime today = DateTime.Parse(todayString);
             DateTime endDate = DateTime.Parse(endDateString);
+            DateTime today = DateTime.Now;            
 
             if (endDate > today)
             {
@@ -259,9 +253,11 @@ namespace Nackowskisss.BusinessLayer
                 EndDateString = model.SlutDatum,
                 StartPrice = decimal.Parse(model.Utropspris),
                 CreatedBy = model.SkapadAv,
-                AllBids = GetBidsForAuction(Int32.Parse(model.AuktionID))
-                //AuctionIsOpen = GetAuctionIsOpen(Int32.Parse(model.AuktionID))
+                AllBids = GetBidsForAuction(Int32.Parse(model.AuktionID)),
+                AuctionIsOpen = GetAuctionIsOpen(model.SlutDatum)
             };
+
+            viewModel.HighestBid = viewModel.AllBids.OrderByDescending(r => r.BidPrice).Select(r => r.BidPrice).FirstOrDefault();
 
             return viewModel;
         }
